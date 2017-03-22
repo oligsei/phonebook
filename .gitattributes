@@ -1,1 +1,2 @@
 *.java -crlf +lf
+*.xml -crlf +lf
