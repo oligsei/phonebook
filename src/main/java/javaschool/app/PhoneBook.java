@@ -31,10 +31,10 @@ public class PhoneBook implements ShellDependent {
     }
 
     @Command
-    public void edit(String name) throws IOException {
-        Record record = lookup(name);
+    public void edit(Integer id) throws IOException {
+        Record record = lookup(id);
         if (record == null) {
-            System.out.printf("Record with name \"%s\" not found.\n", name);
+            System.out.printf("Record with id \"%d\" not found.\n", id);
         } else {
             ShellFactory.createSubshell(record.getName(), theShell, "Editing " + record.getName(), record)
                     .commandLoop();
@@ -63,7 +63,7 @@ public class PhoneBook implements ShellDependent {
         return list;
     }
 
-    private Record lookup(Number id) {
+    private Record lookup(Integer id) {
         for (Record record : list) {
             if (record.getId().equals(id)) {
                 return record;
