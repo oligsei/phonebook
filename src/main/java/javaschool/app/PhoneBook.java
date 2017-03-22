@@ -32,12 +32,12 @@ public class PhoneBook implements ShellDependent {
 
     @Command
     public void edit(String name) throws IOException {
-        try {
-            Record record = lookup(name);
+        Record record = lookup(name);
+        if (record == null) {
+            System.out.printf("Record with name \"%s\" not found.\n", name);
+        } else {
             ShellFactory.createSubshell(record.getName(), theShell, "Editing " + record.getName(), record)
                     .commandLoop();
-        } catch (NullPointerException e) {
-            System.out.printf("Record with name \"%s\" not found.\n", name);
         }
     }
 
@@ -57,6 +57,6 @@ public class PhoneBook implements ShellDependent {
                 return record;
             }
         }
-        throw new NullPointerException();
+        return null;
     }
 }
