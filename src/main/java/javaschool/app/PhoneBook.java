@@ -51,8 +51,20 @@ public class PhoneBook implements ShellDependent {
         list.clear();
     }
 
+
+    @Command
+    public List<Record> search(String substring) {
+        List<Record> list = new ArrayList<>();
+        this.list.forEach((Record record) -> {
+            if (record.getName().toLowerCase().contains(substring.toLowerCase())) {
+                list.add(record);
+            }
+        });
+        return list;
+    }
+
     private Record lookup(String name) {
-        for (Record record: list) {
+        for (Record record : list) {
             if (name.equals(record.getName())) {
                 return record;
             }
