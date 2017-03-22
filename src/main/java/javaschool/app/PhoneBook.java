@@ -42,12 +42,8 @@ public class PhoneBook implements ShellDependent {
     }
 
     @Command
-    public void list() {
-        if (this.list.size() > 0) {
-            System.out.println(this.list.toString());
-        } else {
-            System.out.println("No records");
-        }
+    public List<Record> list() {
+        return list;
     }
 
     @Command
