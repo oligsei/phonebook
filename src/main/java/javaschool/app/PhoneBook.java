@@ -51,7 +51,7 @@ public class PhoneBook implements ShellDependent {
         list.clear();
     }
 
-    private Record lookup(String name) throws NullPointerException {
+    private Record lookup(String name) {
         for (Record record: list) {
             if (name.equals(record.getName())) {
                 return record;
