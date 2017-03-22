@@ -63,9 +63,9 @@ public class PhoneBook implements ShellDependent {
         return list;
     }
 
-    private Record lookup(String name) {
+    private Record lookup(Number id) {
         for (Record record : list) {
-            if (name.equals(record.getName())) {
+            if (record.getId().equals(id)) {
                 return record;
             }
         }
