@@ -53,14 +53,24 @@ public class PhoneBook implements ShellDependent {
 
 
     @Command
-    public List<Record> search(String substring) {
-        List<Record> list = new ArrayList<>();
-        this.list.forEach((Record record) -> {
-            if (record.getName().toLowerCase().contains(substring.toLowerCase())) {
-                list.add(record);
+    public List<Record> search(String userInput) {
+        List<Record> entries = new ArrayList<>();
+        final String substring = userInput.toLowerCase();
+
+        for (Record record : list) {
+            if (record.getName().toLowerCase().contains(substring)
+                    || (record.hasAddress() && record.getAddress().toLowerCase().contains(substring))
+                    || (record.hasEmail() && record.getEmail().toLowerCase().contains(substring))) {
+                entries.add(record);
             }
-        });
-        return list;
+            record.getPhones().forEach((phone) -> {
+                if (phone.contains(substring) && !entries.contains(record)) {
+                    entries.add(record);
+                }
+            });
+        }
+
+        return entries;
     }
 
     private Record lookup(Integer id) {
