@@ -14,10 +14,6 @@ public class PhoneBook implements ShellDependent {
     private List<Record> list = new ArrayList<>();
     private Shell theShell;
 
-    public static void main(String[] args) {
-
-    }
-
     @Override
     public void cliSetShell(Shell theShell) {
         this.theShell = theShell;

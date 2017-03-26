@@ -103,5 +103,4 @@ public class Record {
         }
         return result;
     }
-
 }
