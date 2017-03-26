@@ -27,8 +27,18 @@ public class Record {
         return name;
     }
 
+    @Command
+    void setName(String name) {
+        this.name = name;
+    }
+
     String getEmail() {
         return email;
+    }
+
+    @Command
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     boolean hasEmail() {
@@ -39,27 +49,13 @@ public class Record {
         return address;
     }
 
-    boolean hasAddress() {
-        return address != null;
-    }
-
-    List<String> getPhones() {
-        return phones;
-    }
-
-    @Command
-    void setName(String name) {
-        this.name = name;
-    }
-
-    @Command
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     @Command
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    boolean hasAddress() {
+        return address != null;
     }
 
     @Command
@@ -72,24 +68,17 @@ public class Record {
         this.phones.remove(phone);
     }
 
+    List<String> getPhones() {
+        return phones;
+    }
+
     @Command
     public void clearPhones() {
         this.phones.clear();
     }
 
-    @Command
-    public void info() {
-        System.out.println(this.toString());
-        if (getAddress() != null) {
-            System.out.printf("Address: %s\n", getAddress());
-        }
-        System.out.printf("Number of phones: %d\n", getPhones().size());
-        if (getPhones().size() > 0) {
-            System.out.println(getPhones().toString());
-        }
-    }
-
     @Override
+    @Command(abbrev = "i", name = "info", description = "Print user\'s information")
     public String toString() {
         String result = String.format("#%d — '%s'", getId(), getName());
         if (hasAddress()) {

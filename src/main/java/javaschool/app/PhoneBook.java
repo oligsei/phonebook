@@ -19,14 +19,14 @@ public class PhoneBook implements ShellDependent {
         this.theShell = theShell;
     }
 
-    @Command
+    @Command(description = "Add a new user")
     public void add(String name) {
         Record record = new Record();
         record.setName(name);
         list.add(record);
     }
 
-    @Command
+    @Command(description = "Edit the user by id")
     public void edit(Integer id) throws IOException {
         Record record = lookup(id);
         if (record == null) {
@@ -48,7 +48,7 @@ public class PhoneBook implements ShellDependent {
     }
 
 
-    @Command
+    @Command(description = "Search in user\'s address, email and phone numbers")
     public List<Record> search(String userInput) {
         List<Record> entries = new ArrayList<>();
         final String substring = userInput.toLowerCase();
