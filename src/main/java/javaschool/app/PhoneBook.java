@@ -8,6 +8,7 @@ import asg.cliche.ShellFactory;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class PhoneBook implements ShellDependent {
 
@@ -55,16 +56,7 @@ public class PhoneBook implements ShellDependent {
 
     @Command(description = "Search in records")
     public List<Record> search(String criteria) {
-        List<Record> result = new ArrayList<>();
-        criteria = criteria.toLowerCase();
-
-        for (Record record : list) {
-            if (record.match(criteria)) {
-                result.add(record);
-            }
-        }
-
-        return result;
+        return list.stream().filter((r) -> r.contains(criteria.toLowerCase())).collect(Collectors.toList());
     }
 
     private Record lookup(Integer id) {

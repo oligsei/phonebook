@@ -26,7 +26,7 @@ public abstract class Record {
         this.name = name;
     }
 
-    public abstract boolean match(String criteria);
+    public abstract boolean contains(String criteria);
 
     @Override
     @Command(abbrev = "i", name = "info", description = "Print user\'s information")

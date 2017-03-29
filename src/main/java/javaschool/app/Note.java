@@ -23,7 +23,7 @@ public class Note extends Record {
     }
 
     @Override
-    public boolean match(String criteria) {
+    public boolean contains(String criteria) {
         return this.getName().toLowerCase().contains(criteria) || this.getBody().toLowerCase().contains(criteria);
     }
 
