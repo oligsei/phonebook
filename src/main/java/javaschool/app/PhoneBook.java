@@ -44,8 +44,17 @@ public class PhoneBook implements ShellDependent {
     }
 
     @Command
-    public List<Record> list() {
-        return list;
+    public <T extends Record> List<T> list() {
+        return list(null);
+    }
+
+    @Command
+    public <T extends Record> List<T> list(String type) {
+        try {
+            return this.listByRecordType(Class.forName(type).asSubclass(Record.class));
+        } catch (ClassNotFoundException e) {
+            return (List<T>) list;
+        }
     }
 
     @Command
@@ -55,10 +64,14 @@ public class PhoneBook implements ShellDependent {
 
     @Command(description = "Search in records")
     public List<Record> search(String criteria) {
-        return list.stream().filter((r) -> r.contains(criteria.toLowerCase())).collect(Collectors.toList());
+        return list.stream().filter(r -> r.contains(criteria.toLowerCase())).collect(Collectors.toList());
     }
 
     private Optional<Record> lookup(Integer id) {
         return list.stream().filter((r) -> r.getId().equals(id)).findFirst();
+    }
+
+    private <T extends Record> List<T> listByRecordType(Class<T> recordType) {
+        return list.stream().filter(recordType::isInstance).map(recordType::cast).collect(Collectors.toList());
     }
 }
