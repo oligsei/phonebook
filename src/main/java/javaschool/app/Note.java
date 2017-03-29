@@ -24,7 +24,7 @@ public class Note extends Record {
 
     @Override
     public boolean contains(String criteria) {
-        return this.getName().toLowerCase().contains(criteria) || this.getBody().toLowerCase().contains(criteria);
+        return super.contains(criteria) || this.getBody().toLowerCase().contains(criteria);
     }
 
     @Override

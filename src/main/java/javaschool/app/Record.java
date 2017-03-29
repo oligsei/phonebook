@@ -26,7 +26,9 @@ public abstract class Record {
         this.name = name;
     }
 
-    public abstract boolean contains(String criteria);
+    public boolean contains(String criteria) {
+        return this.getName().toLowerCase().contains(criteria);
+    }
 
     @Override
     @Command(abbrev = "i", name = "info", description = "Print user\'s information")

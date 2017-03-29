@@ -77,7 +77,7 @@ public class Person extends Record {
 
     @Override
     public boolean contains(String criteria) {
-        if (this.getName().toLowerCase().contains(criteria)
+        if (super.contains(criteria)
                 || (this.hasAddress() && this.getAddress().toLowerCase().contains(criteria))
                 || (this.hasEmail() && this.getEmail().toLowerCase().contains(criteria))) {
             return true;
