@@ -33,9 +33,10 @@ public class PhoneBook implements ShellDependent {
 
     @Command(description = "Edit a record by id")
     public void edit(Integer id) throws IOException {
-        Optional<Record> record = lookup(id);
-        if (record.isPresent()) {
-            ShellFactory.createSubshell(record.get().getName(), theShell, "Editing " + record.get().getName(), record)
+        Optional<Record> result = lookup(id);
+        if (result.isPresent()) {
+            Record record = result.get();
+            ShellFactory.createSubshell(record.getName(), theShell, "Editing " + record.getName(), result)
                     .commandLoop();
         } else {
             System.out.printf("Record with id \"%d\" not found.\n", id);
