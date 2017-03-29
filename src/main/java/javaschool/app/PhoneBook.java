@@ -19,14 +19,19 @@ public class PhoneBook implements ShellDependent {
         this.theShell = theShell;
     }
 
-    @Command(description = "Add a new user")
-    public void add(String name) {
-        Record record = new Record();
-        record.setName(name);
+    @Command(description = "Add a new person")
+    public void addPerson(String name) {
+        Record record = new Person(name);
         list.add(record);
     }
 
-    @Command(description = "Edit the user by id")
+    @Command(description = "Add a new note")
+    public void addNote(String name) {
+        Record record = new Note(name);
+        list.add(record);
+    }
+
+    @Command(description = "Edit a record by id")
     public void edit(Integer id) throws IOException {
         Record record = lookup(id);
         if (record == null) {
@@ -48,26 +53,18 @@ public class PhoneBook implements ShellDependent {
     }
 
 
-    @Command(description = "Search in user\'s address, email and phone numbers")
-    public List<Record> search(String userInput) {
-        List<Record> entries = new ArrayList<>();
-        final String substring = userInput.toLowerCase();
+    @Command(description = "Search in records")
+    public List<Record> search(String criteria) {
+        List<Record> result = new ArrayList<>();
+        criteria = criteria.toLowerCase();
 
         for (Record record : list) {
-            if (record.getName().toLowerCase().contains(substring)
-                    || (record.hasAddress() && record.getAddress().toLowerCase().contains(substring))
-                    || (record.hasEmail() && record.getEmail().toLowerCase().contains(substring))) {
-                entries.add(record);
-            }
-            for (String phone: record.getPhones()) {
-                if (phone.toLowerCase().contains(substring) && !entries.contains(record)) {
-                    entries.add(record);
-                    break;
-                }
+            if (record.match(criteria)) {
+                result.add(record);
             }
         }
 
-        return entries;
+        return result;
     }
 
     private Record lookup(Integer id) {
