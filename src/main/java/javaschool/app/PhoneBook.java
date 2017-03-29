@@ -59,11 +59,12 @@ public class PhoneBook implements ShellDependent {
                     || (record.hasEmail() && record.getEmail().toLowerCase().contains(substring))) {
                 entries.add(record);
             }
-            record.getPhones().forEach((phone) -> {
-                if (phone.contains(substring) && !entries.contains(record)) {
+            for (String phone: record.getPhones()) {
+                if (phone.toLowerCase().contains(substring) && !entries.contains(record)) {
                     entries.add(record);
+                    break;
                 }
-            });
+            }
         }
 
         return entries;
