@@ -8,6 +8,7 @@ import asg.cliche.ShellFactory;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class PhoneBook implements ShellDependent {
@@ -22,24 +23,22 @@ public class PhoneBook implements ShellDependent {
 
     @Command(description = "Add a new person")
     public void addPerson(String name) {
-        Record record = new Person(name);
-        list.add(record);
+        list.add(new Person(name));
     }
 
     @Command(description = "Add a new note")
     public void addNote(String name) {
-        Record record = new Note(name);
-        list.add(record);
+        list.add(new Note(name));
     }
 
     @Command(description = "Edit a record by id")
     public void edit(Integer id) throws IOException {
-        Record record = lookup(id);
-        if (record == null) {
-            System.out.printf("Record with id \"%d\" not found.\n", id);
-        } else {
-            ShellFactory.createSubshell(record.getName(), theShell, "Editing " + record.getName(), record)
+        Optional<Record> record = lookup(id);
+        if (record.isPresent()) {
+            ShellFactory.createSubshell(record.get().getName(), theShell, "Editing " + record.get().getName(), record)
                     .commandLoop();
+        } else {
+            System.out.printf("Record with id \"%d\" not found.\n", id);
         }
     }
 
@@ -53,18 +52,12 @@ public class PhoneBook implements ShellDependent {
         list.clear();
     }
 
-
     @Command(description = "Search in records")
     public List<Record> search(String criteria) {
         return list.stream().filter((r) -> r.contains(criteria.toLowerCase())).collect(Collectors.toList());
     }
 
-    private Record lookup(Integer id) {
-        for (Record record : list) {
-            if (record.getId().equals(id)) {
-                return record;
-            }
-        }
-        return null;
+    private Optional<Record> lookup(Integer id) {
+        return list.stream().filter((r) -> r.getId().equals(id)).findFirst();
     }
 }
