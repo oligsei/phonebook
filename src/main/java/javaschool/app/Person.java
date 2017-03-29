@@ -62,7 +62,7 @@ public class Person extends Record {
     @Override
     @Command(abbrev = "i", name = "info", description = "Print person\'s information")
     public String toString() {
-        String result = String.format("Record #%d (person) — '%s'", getId(), getName());
+        String result = super.toString();
         if (hasAddress()) {
             result += String.format("\n     address: '%s'", getAddress());
         }

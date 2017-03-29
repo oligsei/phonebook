@@ -30,7 +30,7 @@ public class Note extends Record {
     @Override
     @Command(abbrev = "i", name = "info", description = "Print note\'s information")
     public String toString() {
-        String result = String.format("Record #%d (note) — '%s'", getId(), getName());
+        String result = super.toString();
         if (hasBody()) {
             result += String.format("\n     body: '%s'", getBody());
         }

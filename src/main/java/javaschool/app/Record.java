@@ -7,6 +7,7 @@ public abstract class Record {
 
     private Integer id;
     private String name = null;
+    private String type = "record";
 
     Record(String name) {
         this.id = ++Record.count;
@@ -31,8 +32,8 @@ public abstract class Record {
     }
 
     @Override
-    @Command(abbrev = "i", name = "info", description = "Print user\'s information")
+    @Command(abbrev = "i", name = "info", description = "Print record\'s information")
     public String toString() {
-        return String.format("#%d — '%s'", getId(), getName());
+        return String.format("Record #%d (%s) — '%s'", getId(), this.type, getName());
     }
 }

@@ -31,13 +31,17 @@ public class PhoneBook implements ShellDependent {
         list.add(new Note(name));
     }
 
+    @Command(description = "Add a new reminder")
+    public void addReminder(String name) {
+        list.add(new Reminder(name));
+    }
+
     @Command(description = "Edit a record by id")
     public void edit(Integer id) throws IOException {
         Optional<Record> result = lookup(id);
         if (result.isPresent()) {
             Record record = result.get();
-            ShellFactory.createSubshell(record.getName(), theShell, "Editing " + record.getName(), result)
-                    .commandLoop();
+            ShellFactory.createSubshell(record.getName(), theShell, "Editing " + record.getName(), record).commandLoop();
         } else {
             System.out.printf("Record with id \"%d\" not found.\n", id);
         }
@@ -46,6 +50,26 @@ public class PhoneBook implements ShellDependent {
     @Command
     public List<Record> list() {
         return list;
+    }
+
+    @Command
+    public List<Record> list(String type) {
+        List<Record> result = new ArrayList<>();
+        type = type.toLowerCase();
+
+        if (type.equals("note")) {
+            return list.stream().filter(record -> record instanceof Note).collect(Collectors.toList());
+        }
+
+        if (type.equals("person")) {
+            return list.stream().filter(record -> record instanceof Person).collect(Collectors.toList());
+        }
+
+        if (type.equals("reminder")) {
+            return list.stream().filter(record -> record instanceof Reminder).collect(Collectors.toList());
+        }
+
+        return result;
     }
 
     @Command
