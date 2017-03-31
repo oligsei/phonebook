@@ -91,7 +91,7 @@ public class PhoneBook implements ShellDependent {
         for (int i = 0; i < count; i++) {
             Person person = Person.fromJSON(new JSONObject(new JSONTokener(url.openStream())));
             list.add(person);
-            System.out.format("User '%s' created\n", person.getName());
+            System.out.format("Created #%d — '%s'\n", person.getId(), person.getName());
         }
     }
 
