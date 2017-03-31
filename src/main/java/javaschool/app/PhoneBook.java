@@ -4,8 +4,11 @@ import asg.cliche.Command;
 import asg.cliche.Shell;
 import asg.cliche.ShellDependent;
 import asg.cliche.ShellFactory;
+import org.json.JSONObject;
+import org.json.JSONTokener;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -80,6 +83,16 @@ public class PhoneBook implements ShellDependent {
     @Command(description = "Search in records")
     public List<Record> search(String criteria) {
         return list.stream().filter((r) -> r.contains(criteria.toLowerCase())).collect(Collectors.toList());
+    }
+
+    @Command
+    public void generate(Integer count) throws IOException {
+        URL url = new URL("http://api.namefake.com/latvian-latvia");
+        for (int i = 0; i < count; i++) {
+            Person person = Person.fromJSON(new JSONObject(new JSONTokener(url.openStream())));
+            list.add(person);
+            System.out.format("User '%s' created\n", person.getName());
+        }
     }
 
     private Optional<Record> lookup(Integer id) {
