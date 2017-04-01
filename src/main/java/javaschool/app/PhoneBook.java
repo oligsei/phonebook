@@ -4,11 +4,9 @@ import asg.cliche.Command;
 import asg.cliche.Shell;
 import asg.cliche.ShellDependent;
 import asg.cliche.ShellFactory;
-import org.json.JSONObject;
-import org.json.JSONTokener;
+import javaschool.app.personfactory.PersonFactory;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -86,13 +84,10 @@ public class PhoneBook implements ShellDependent {
     }
 
     @Command
-    public void generate(Integer count) throws IOException {
-        URL url = new URL("http://api.namefake.com/latvian-latvia");
-        for (int i = 0; i < count; i++) {
-            Person person = Person.fromJSON(new JSONObject(new JSONTokener(url.openStream())));
-            list.add(person);
-            System.out.format("Created #%d — '%s'\n", person.getId(), person.getName());
-        }
+    public void generate(Integer count) {
+        List<Person> result = PersonFactory.generate(count, PersonFactory.API_RANDOM_USER);
+        list.addAll(result);
+        System.out.format("Created %s new users\n", result.size());
     }
 
     private Optional<Record> lookup(Integer id) {

@@ -11,7 +11,7 @@ public class Person extends Record {
     private String email = null;
     private List<String> phones = new ArrayList<>();
 
-    Person(String name) {
+    public Person(String name) {
         super(name);
     }
 
@@ -89,16 +89,5 @@ public class Person extends Record {
             }
         }
         return false;
-    }
-
-    public static Person fromJSON(JSONObject json) {
-        Person person = new Person(json.getString("name"));
-
-        person.setAddress(json.getString("address").replace("\n", "; "));
-        person.setEmail(json.getString("email_u").toLowerCase() + "@" + json.getString("email_d") );
-        person.addPhone(json.getString("phone_h"));
-        person.addPhone(json.getString("phone_w"));
-
-        return person;
     }
 }
