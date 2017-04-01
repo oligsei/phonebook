@@ -43,12 +43,4 @@ public class NameFakeApiAdapter implements IApiAdapter {
 
         return person;
     }
-
-    private URL getURL() {
-        try {
-            return new URL(NameFakeApiAdapter.url);
-        } catch (MalformedURLException e) {
-            return null;
-        }
-    }
 }
