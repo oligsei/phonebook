@@ -5,6 +5,7 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,11 +16,9 @@ public class RandomUserApiAdapter implements IApiAdapter {
     @Override
     public List<Person> generate(Integer count) {
         List<Person> result = new ArrayList<>();
-        URL url;
         JSONObject response;
-        try {
-            url = new URL(RandomUserApiAdapter.url + "?results=" + count);
-            response = new JSONObject(new JSONTokener(url.openStream()));
+        try (InputStream inputStream = new URL(RandomUserApiAdapter.url + "?results=" + count).openStream()) {
+            response = new JSONObject(new JSONTokener(inputStream));
         } catch (IOException e) {
             return result;
         }

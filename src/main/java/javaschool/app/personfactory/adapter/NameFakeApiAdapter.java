@@ -5,7 +5,7 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,16 +16,9 @@ public class NameFakeApiAdapter implements IApiAdapter {
     @Override
     public List<Person> generate(Integer count) {
         List<Person> result = new ArrayList<>();
-        URL url;
-        try {
-            url = new URL(NameFakeApiAdapter.url);
-        } catch (MalformedURLException e) {
-            return result;
-        }
-
         for (int i = 0; i < count; i++) {
-            try {
-                result.add(this.fromJSON(new JSONObject(new JSONTokener(url.openStream()))));
+            try (InputStream inputStream = new URL(NameFakeApiAdapter.url).openStream()) {
+                result.add(this.fromJSON(new JSONObject(new JSONTokener(inputStream))));
             } catch (IOException e) {
             }
         }
