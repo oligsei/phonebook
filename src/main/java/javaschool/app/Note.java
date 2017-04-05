@@ -4,6 +4,7 @@ import asg.cliche.Command;
 
 public class Note extends Record {
     private String body = "";
+    private String type = "note";
 
     Note(String name) {
         super(name);

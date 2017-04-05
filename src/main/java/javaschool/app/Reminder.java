@@ -6,7 +6,7 @@ import java.util.Date;
 
 public class Reminder extends Note {
     private Date time = null;
-    protected String type = "reminder";
+    private String type = "reminder";
 
     Reminder(String name) {
         super(name);
@@ -26,7 +26,7 @@ public class Reminder extends Note {
     }
 
     @Override
-    @Command(abbrev = "i", name = "info", description = "Print note\'s information")
+    @Command(abbrev = "i", name = "info", description = "Print reminder\'s information")
     public String toString() {
         return super.toString();
     }

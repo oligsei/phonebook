@@ -1,7 +1,6 @@
 package javaschool.app;
 
 import asg.cliche.Command;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +9,7 @@ public class Person extends Record {
     private String address = null;
     private String email = null;
     private List<String> phones = new ArrayList<>();
+    private String type = "person";
 
     public Person(String name) {
         super(name);
