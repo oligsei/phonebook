@@ -4,6 +4,7 @@ import asg.cliche.Command;
 import asg.cliche.Shell;
 import asg.cliche.ShellDependent;
 import asg.cliche.ShellFactory;
+import javaschool.app.personfactory.PersonFactory;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -80,6 +81,13 @@ public class PhoneBook implements ShellDependent {
     @Command(description = "Search in records")
     public List<Record> search(String criteria) {
         return list.stream().filter((r) -> r.contains(criteria.toLowerCase())).collect(Collectors.toList());
+    }
+
+    @Command
+    public void generate(Integer count) {
+        List<Person> result = PersonFactory.generate(count, PersonFactory.API_RANDOM_USER);
+        list.addAll(result);
+        System.out.format("Created %s new users\n", result.size());
     }
 
     private Optional<Record> lookup(Integer id) {
