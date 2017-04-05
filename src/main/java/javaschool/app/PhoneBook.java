@@ -86,6 +86,11 @@ public class PhoneBook implements ShellDependent {
         list.clear();
     }
 
+    @Command
+    public void getReminds() {
+        // see what reminders already finished
+    }
+
     @Command(description = "Search in records")
     public List<Record> search(String criteria) {
         return list.stream().filter((r) -> r.contains(criteria.toLowerCase())).collect(Collectors.toList());
