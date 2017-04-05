@@ -9,7 +9,6 @@ public class Person extends Record {
     private String address = null;
     private String email = null;
     private List<String> phones = new ArrayList<>();
-    private String type = "person";
 
     public Person(String name) {
         super(name);
@@ -93,6 +92,6 @@ public class Person extends Record {
 
     @Override
     protected String getType() {
-        return type;
+        return "person";
     }
 }

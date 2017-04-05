@@ -4,7 +4,6 @@ import asg.cliche.Command;
 
 public class Note extends Record {
     private String body = "";
-    private String type = "note";
 
     Note(String name) {
         super(name);
@@ -40,6 +39,6 @@ public class Note extends Record {
 
     @Override
     protected String getType() {
-        return type;
+        return "note";
     }
 }

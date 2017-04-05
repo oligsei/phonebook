@@ -10,7 +10,6 @@ public abstract class Record {
 
     private Integer id;
     private String name = null;
-    private String type = "record";
     private Date created = new Date();
 
     private SimpleDateFormat createdFormat = new SimpleDateFormat("y.MM.dd HH:mm:ss");
@@ -47,6 +46,6 @@ public abstract class Record {
     }
 
     protected String getType() {
-        return type;
+        return "record";
     }
 }

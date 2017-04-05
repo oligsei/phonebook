@@ -6,7 +6,6 @@ import java.util.Date;
 
 public class Reminder extends Note {
     private Date time = null;
-    private String type = "reminder";
 
     Reminder(String name) {
         super(name);
@@ -33,6 +32,6 @@ public class Reminder extends Note {
 
     @Override
     protected String getType() {
-        return type;
+        return "reminder";
     }
 }
