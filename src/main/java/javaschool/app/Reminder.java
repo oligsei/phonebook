@@ -2,32 +2,36 @@ package javaschool.app;
 
 import asg.cliche.Command;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class Reminder extends Note {
-    private Date time = null;
+    private LocalDateTime when = null;
 
     Reminder(String name) {
         super(name);
     }
 
-    Date getTime() {
-        return time;
+    LocalDateTime getWhen() {
+        return when;
     }
 
     @Command
-    public void setTime(Date time) {
-        this.time = time;
+    public void setWhen(String when) {
+        this.when = LocalDateTime.parse(when);
     }
 
-    boolean hasTime() {
-        return time != null;
+    boolean hasWhen() {
+        return when != null;
     }
 
     @Override
     @Command(abbrev = "i", name = "info", description = "Print reminder\'s information")
     public String toString() {
-        return super.toString();
+        String result = super.toString();
+        if (hasWhen()) {
+            result += String.format("\n     reminder set to: %s", when.format(this.getDateTimeFormat()));
+        }
+        return result;
     }
 
     @Override

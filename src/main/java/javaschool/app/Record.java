@@ -2,17 +2,19 @@ package javaschool.app;
 
 import asg.cliche.Command;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public abstract class Record {
     private static Integer count = 0;
 
     private Integer id;
     private String name = null;
-    private Date created = new Date();
+    //    private final Instant created = Instant.now();
+//    private final LocalDateTime createdDateTime = LocalDateTime.ofInstant(this.created, ZoneId.systemDefault());
 
-    private SimpleDateFormat createdFormat = new SimpleDateFormat("y.MM.dd HH:mm:ss");
+    private final LocalDateTime created = LocalDateTime.now();
+    private final DateTimeFormatter format = DateTimeFormatter.ofPattern("y.MM.dd HH:mm:ss");
 
     Record(String name) {
         this.id = ++Record.count;
@@ -41,8 +43,12 @@ public abstract class Record {
     public String toString() {
 
         String result = String.format("Record #%d (%s) — '%s'", getId(), getType(), getName());
-        result += String.format("\n     created: %s", createdFormat.format(created));
+        result += String.format("\n     created: %s", created.format(format));
         return result;
+    }
+
+    protected DateTimeFormatter getDateTimeFormat() {
+        return format;
     }
 
     protected String getType() {
