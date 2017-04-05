@@ -38,5 +38,8 @@ public class Note extends Record {
         return result;
     }
 
-
+    @Override
+    protected String getType() {
+        return type;
+    }
 }

@@ -61,6 +61,21 @@ public class Person extends Record {
     }
 
     @Override
+    public boolean contains(String criteria) {
+        if (super.contains(criteria)
+                || (this.hasAddress() && this.getAddress().toLowerCase().contains(criteria))
+                || (this.hasEmail() && this.getEmail().toLowerCase().contains(criteria))) {
+            return true;
+        }
+        for (String phone : this.getPhones()) {
+            if (phone.toLowerCase().contains(criteria)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
     @Command(abbrev = "i", name = "info", description = "Print person\'s information")
     public String toString() {
         String result = super.toString();
@@ -77,17 +92,7 @@ public class Person extends Record {
     }
 
     @Override
-    public boolean contains(String criteria) {
-        if (super.contains(criteria)
-                || (this.hasAddress() && this.getAddress().toLowerCase().contains(criteria))
-                || (this.hasEmail() && this.getEmail().toLowerCase().contains(criteria))) {
-            return true;
-        }
-        for (String phone : this.getPhones()) {
-            if (phone.toLowerCase().contains(criteria)) {
-                return true;
-            }
-        }
-        return false;
+    protected String getType() {
+        return type;
     }
 }

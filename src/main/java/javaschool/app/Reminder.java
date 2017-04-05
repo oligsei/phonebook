@@ -31,5 +31,8 @@ public class Reminder extends Note {
         return super.toString();
     }
 
-
+    @Override
+    protected String getType() {
+        return type;
+    }
 }
