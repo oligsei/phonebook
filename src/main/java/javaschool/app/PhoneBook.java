@@ -55,7 +55,6 @@ public class PhoneBook implements ShellDependent {
 
     @Command
     public List<Record> list(String type) {
-        List<Record> result = new ArrayList<>();
         type = type.toLowerCase();
 
         if (type.equals("note")) {
@@ -70,6 +69,15 @@ public class PhoneBook implements ShellDependent {
             return list.stream().filter(record -> record instanceof Reminder).collect(Collectors.toList());
         }
 
+        return new ArrayList<>();
+    }
+
+    @Command
+    public List<Record> list(String type, String... types) {
+        final List<Record> result = this.list(type);
+        for (String otherType : types) {
+            result.addAll(this.list(otherType));
+        }
         return result;
     }
 
