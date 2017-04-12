@@ -37,12 +37,17 @@ public class PhoneBook implements ShellDependent {
 
     @Command(description = "Edit a record by id")
     public void edit(Integer id) throws IOException {
-        Record record = lookup(id);
+        Record record = get(id);
         if (record == null) {
             System.out.printf("Record with id \"%d\" not found.\n", id);
         } else {
             ShellFactory.createSubshell(record.getName(), theShell, "Editing " + record.getName(), record).commandLoop();
         }
+    }
+
+    @Command
+    public Record get(Integer id) {
+        return map.get(id);
     }
 
     @Command
@@ -93,16 +98,11 @@ public class PhoneBook implements ShellDependent {
         return map.values().stream().filter((r) -> r.contains(criteria.toLowerCase())).collect(Collectors.toList());
     }
 
-    @Command
+    @Command(abbrev = "gen")
     public void generate(Integer count) {
         List<Person> result = PersonFactory.generate(count, PersonFactory.API_RANDOM_USER);
         result.forEach(this::add);
         System.out.format("Created %s new users\n", result.size());
-    }
-
-    private Record lookup(Integer id) {
-        return map.get(id);
-//        return map.values().stream().filter((r) -> r.getId().equals(id)).findFirst();
     }
 
     private void add(Record r) {
