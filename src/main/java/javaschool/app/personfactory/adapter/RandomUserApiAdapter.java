@@ -31,7 +31,6 @@ public class RandomUserApiAdapter implements IApiAdapter {
         JSONObject address = json.getJSONObject("location");
         JSONObject name = json.getJSONObject("name");
         Person person = new Person(
-                name.getString("title") + " " +
                         name.getString("first") + " " +
                         name.getString("last")
         );
