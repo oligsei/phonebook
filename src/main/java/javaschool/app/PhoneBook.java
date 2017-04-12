@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 public class PhoneBook implements ShellDependent {
 
     private Map<Integer, Record> map = new HashMap<>();
+    private NavigableMap<String, Record> indexByName = new TreeMap<>();
     private Shell theShell;
 
     @Override
@@ -52,7 +53,7 @@ public class PhoneBook implements ShellDependent {
 
     @Command
     public Collection<Record> list() {
-        return map.values();
+        return indexByName.values();
     }
 
     @Command
@@ -84,8 +85,18 @@ public class PhoneBook implements ShellDependent {
     }
 
     @Command
+    public SortedMap<?, Record> after(String fromKey) {
+        return indexByName.tailMap(fromKey);
+    }
+
+    @Command SortedMap<?, Record> before(String toKey) {
+        return indexByName.headMap(toKey);
+    }
+
+    @Command
     public void clear() {
         map.clear();
+        indexByName.clear();
     }
 
     @Command
@@ -107,5 +118,6 @@ public class PhoneBook implements ShellDependent {
 
     private void add(Record r) {
         map.put(r.getId(), r);
+        indexByName.put(r.getName(), r);
     }
 }
